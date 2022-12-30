@@ -8,11 +8,11 @@ interface IPageMakerProps{
 const testData = {
   layerType: "Scroll",
   data: {
-    list: 'this is works?'
+    list: "this is works?"
   },
 }
 
-const getLayer = (type: string): LayerComponent => {
+const getLayer = (type: string): LayerComponent | undefined => {
   const layerName = `${type}Layer`;
   if (layerName in Layers) {
     return (Layers as any)[layerName] as LayerComponent;
@@ -22,9 +22,14 @@ const getLayer = (type: string): LayerComponent => {
 
 const PageMaker = () => {
   const Layer = getLayer(testData.layerType);
+  if (Layer !== undefined) {
+    return (
+      <Layer data={testData.data}></Layer>
+    );
+  }
   return (
-    <Layer data={testData.data}></Layer>
-  );
+    <></>
+  )
 };
 
 export default PageMaker
